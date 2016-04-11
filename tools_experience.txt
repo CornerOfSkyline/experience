@@ -1,0 +1,22 @@
+===git start===================================
+一、网络慢或仓库异常引起clone仓库时报“Early EOF”时处理如下
+1.First, turn off compression:
+
+git config --global core.compression 0
+
+2.Next, let's do a partial clone to truncate the amount of info coming down:
+
+git clone --depth 1 <repo_URI>
+
+3.When that works, go into the new directory and retrieve the rest of the clone:
+
+git fetch --unshallow 
+or, alternately,
+
+git fetch --depth=2147483647
+
+4.Now, do a regular pull:
+
+git pull --all
+
+===git end=====================================
