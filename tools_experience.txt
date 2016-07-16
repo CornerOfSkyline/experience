@@ -57,4 +57,25 @@ make >error_log.txt 2>&1
 功能：查找<text>中的单词（单词以“空格”、“Tab”或“回车”“换行”分隔）是否符合模式<pattern>，如果匹配的话，则以<replacement>替换。这里，<pattern>可以包括通配符“%”，表示任意长度的字串。如果<replacement>中也包含“%”，那么，<replacement>中的这个“%”将是<pattern>中的那个“%”所代表的字串(这个在pix的makefile中曾被应用，FMU_VERSION = $(patsubst px4fmu-%,%,$(word 1, $(subst _, ,$(1))))，寻找px4fmu-v2_default中的版本号V2供找到适应的io固件版本)。（可以用“\”来转义，以“\%”来表示真实含义的“%”字符）
 返回：函数返回被替换过后的字符串。
 
+3.显示makefile中的参数值
+
+执行命令：make -p > xx
+在对应的路径 下，执行makefile，
+    -p, --print-data-base       Print make's internal database.即打印makefile 的执行规矩等。从而查看到相应的makefile中的各个变量的值。
+    > xx 把这些数据都重定向到xx这个文件中
+
+4.filter
+
+$(filter ,)
+    名称：过滤函数——filter。
+    功能：以模式过滤字符串中的单词，保留符合模式的单词。可以有多个模式。
+    返回：返回符合模式的字串。
+    示例：
+        sources := foo.c bar.c baz.s ugh.h
+        foo: $(sources)
+               
+cc $(filter %.c %.s,$(sources)) -o foo
+       
+$(filter %.c %.s,$(sources))返回的值是“foo.c bar.c baz.s”。
+
 ===make end====================================
